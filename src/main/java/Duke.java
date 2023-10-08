@@ -27,7 +27,7 @@ public class Duke {
         String msg ="Here are the tasks in your list:\n";
         for (int i = 0; i < list.size(); i++) {
             Task item = list.get(i);
-            msg += (i+1) + ". [" + item.getStatusIcon() +  "] " + item.getDescription() + "\n";
+            msg += (i+1) + ". " + item.toString() + "\n";
         }
         print(msg);
     }
@@ -35,14 +35,14 @@ public class Duke {
     private static void markTask(Task task) {
         task.setDone();
         String msg = "Nice! I've marked this task as done:\n";
-        msg += indent + "[" + task.getStatusIcon() +  "] " + task.getDescription() + "\n";
+        msg += indent + task.toString() + "\n";
         print(msg);
     }
 
     private static void unMarkTask(Task task) {
         task.setUndone();
         String msg = "Ok, I've marked this task as not done yet:\n";
-        msg += indent + "[" + task.getStatusIcon() +  "] " + task.getDescription() + "\n";
+        msg += indent + task.toString() + "\n";
         print(msg);
     }
 
@@ -80,8 +80,32 @@ public class Duke {
                 }
             } 
             else {
-                tasks.add(new Task(msg));
-                print("added: " + msg);
+                String taskType = msg.split(" ")[0];
+                String description;
+                switch (taskType) {
+                    case "todo":
+                        description = msg.substring(4).trim(); 
+                        tasks.add(new Todo(description));
+                        print("Got it. I've added this task:\n" + indent + tasks.get(tasks.size()-1).toString() + "\nNow you have " + tasks.size() + " tasks in the list.");
+                        break;
+
+                    case "deadline":
+                        String[] deadlineDetails = msg.split("deadline|/by");
+                        description = deadlineDetails[1].trim();
+                        String by = deadlineDetails[2].trim();
+                        tasks.add(new Deadline(description, by));
+                        print("Got it. I've added this task:\n" + indent +  tasks.get(tasks.size()-1).toString() + "\nNow you have " + tasks.size() + " tasks in the list.");
+                        break;
+
+                    case "event":
+                        String[] eventDetails = msg.split("/from|/to");
+                        description = eventDetails[0].substring(6).trim();
+                        String from = eventDetails[1].trim();
+                        String to = eventDetails[2].trim();
+                        tasks.add(new Event(description, from, to));
+                        print("Got it. I've added this task:\n" + indent + tasks.get(tasks.size()-1).toString() + "\nNow you have " + tasks.size() + " tasks in the list.");
+                        break;
+                }
             }
         }
 

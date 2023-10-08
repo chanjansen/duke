@@ -16,6 +16,10 @@ public String getDescription() {
     return (isDone? "X": " ");
   }
 
+  public String toString() {
+    return "[" + getStatusIcon() + "] " + description;
+  }
+
   public void setDone() {
     this.isDone = true;
   }
