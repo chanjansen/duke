@@ -71,11 +71,15 @@ public class Duke {
             print("OOPS!!! Please provide a valid task number to mark.");
           }
         } else if (msg.startsWith("unmark")) {
-          int itemNo = Integer.parseInt(msg.split(" ")[1]) - 1;
-          if (itemNo >= 0 && itemNo < tasks.size()) {
-            unMarkTask(tasks.get(itemNo));
-          } else {
-            print("Invalid task number");
+          try {
+            int itemNo = Integer.parseInt(msg.split(" ")[1]) - 1;
+            if (itemNo >= 0 && itemNo < tasks.size()) {
+              unMarkTask(tasks.get(itemNo));
+            } else {
+              print("Invalid task number");
+            }
+          } catch (NumberFormatException e) {
+            print("OOPS!!! Please provide a valid task number to unmark.");
           }
         } else {
           String taskType = msg.split(" ")[0];
