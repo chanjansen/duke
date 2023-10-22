@@ -76,10 +76,22 @@ public class Duke {
             if (itemNo >= 0 && itemNo < tasks.size()) {
               unMarkTask(tasks.get(itemNo));
             } else {
-              print("Invalid task number");
+              print("OOPS!!! Please provide a valid task number to unmark.");
             }
           } catch (NumberFormatException e) {
             print("OOPS!!! Please provide a valid task number to unmark.");
+          }
+        } else if (msg.startsWith("delete")) {
+          try {
+            int itemNo = Integer.parseInt(msg.split(" ")[1]) - 1;
+            if (itemNo >= 0 && itemNo < tasks.size()) {
+              Task deletedTask = tasks.remove(itemNo);
+              print("Noted. I've removed this task:\n  " + deletedTask.toString() + "\nNow you have " + tasks.size() + " tasks in the list.");
+            } else {
+              print("OOPS!!! Please provide a valid task number to delete.");
+            }
+          } catch (NumberFormatException e) {
+            print("OOPS!!! Please provide a valid task number to delete.");
           }
         } else {
           String taskType = msg.split(" ")[0];
