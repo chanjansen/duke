@@ -1,4 +1,6 @@
-public class Task {
+package duke.task;
+
+public abstract class Task {
   protected String description;
   protected boolean isDone;
 
@@ -27,4 +29,7 @@ public String getDescription() {
   public void setUndone() {
     this.isDone = false;
   }
+
+  public abstract String toFileString();
+
 }
